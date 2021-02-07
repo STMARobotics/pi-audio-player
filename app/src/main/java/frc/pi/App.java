@@ -23,18 +23,15 @@ public class App {
     backgroundClip = loadAudioClip("tank driving.wav");
     backgroundClip.loop(Clip.LOOP_CONTINUOUSLY);
     backgroundClip.start();
+
+    foregroundClip = loadAudioClip("tank fire.wav");
   }
 
-  private Clip loadAudioClip(String clipName) {
-    try {
-      AudioInputStream tankFiringInputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(clipName));
-      var clip = AudioSystem.getClip();
-      clip.open(tankFiringInputStream);
-      return clip;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+  private Clip loadAudioClip(String clipName) throws Exception {
+    AudioInputStream tankFiringInputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(clipName));
+    var clip = AudioSystem.getClip();
+    clip.open(tankFiringInputStream);
+    return clip;
   }
 
   public void run(String serverName) {
@@ -45,19 +42,14 @@ public class App {
     inst.startClient(serverName);
     playEntry.setBoolean(false);
 
-    System.out.println("Main thread: " + Thread.currentThread().getName());
     table.addEntryListener("Play", (tabl, key, entry, value, flags) -> {
       if (value.getBoolean()) {
-        System.out.println("Start playing: " + Thread.currentThread().getName());
-        foregroundClip = loadAudioClip("tank fire.wav");
+        System.out.println("Start playing");
         foregroundClip.start();
-        System.out.println("Done starting");
       } else {
         System.out.println("Stop playing");
         foregroundClip.stop();
         foregroundClip.setFramePosition(0);
-        // foregroundClip.close();
-        System.out.println("Done stopping");
       }
     }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 
