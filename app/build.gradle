@@ -37,6 +37,7 @@ dependencies {
     runtime "edu.wpi.first.ntcore:ntcore-jni:2021.2.2:windowsx86"
     runtime "edu.wpi.first.ntcore:ntcore-jni:2021.2.2:windowsx86-64"
     runtime "edu.wpi.first.ntcore:ntcore-jni:2021.2.2:linuxx86-64"
+    runtime "edu.wpi.first.ntcore:ntcore-jni:2021.2.2:linuxraspbian"
     runtime "edu.wpi.first.ntcore:ntcore-jni:2021.2.2:osxx86-64"
 }
 
