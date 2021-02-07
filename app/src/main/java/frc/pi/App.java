@@ -5,6 +5,7 @@ package frc.pi;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -42,6 +43,14 @@ public class App {
     inst.startClient(serverName);
     playEntry.setBoolean(false);
 
+    foregroundClip.addLineListener((event) -> {
+      if(event.getType() == LineEvent.Type.STOP) {
+        System.out.println("Stopped playing");
+        playEntry.setBoolean(false);
+        foregroundClip.setFramePosition(0);
+      }
+    });
+
     table.addEntryListener("Play", (tabl, key, entry, value, flags) -> {
       if (value.getBoolean()) {
         System.out.println("Start playing");
@@ -49,7 +58,6 @@ public class App {
       } else {
         System.out.println("Stop playing");
         foregroundClip.stop();
-        foregroundClip.setFramePosition(0);
       }
     }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 
