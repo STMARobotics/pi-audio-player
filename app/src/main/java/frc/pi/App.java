@@ -16,7 +16,7 @@ public class App {
   private Clip backgroundClip;
 
   public static void main(String[] args) throws Exception {
-    new App().run();
+    new App().run(args[0]);
   }
 
   public App() throws Exception {
@@ -37,12 +37,12 @@ public class App {
     }
   }
 
-  public void run() {
+  public void run(String serverName) {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("Music");
     NetworkTableEntry playEntry = table.getEntry("Play");
-    inst.startClientTeam(7028);  // where TEAM=190, 294, etc, or use inst.startClient("hostname") or similar
-    // inst.startClient("localhost");
+    // inst.startClientTeam(7028);  // where TEAM=190, 294, etc, or use inst.startClient("hostname") or similar
+    inst.startClient(serverName);
     playEntry.setBoolean(false);
 
     System.out.println("Main thread: " + Thread.currentThread().getName());
