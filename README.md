@@ -44,6 +44,18 @@ Make sure Server Mode and the Default Port setting are on, then press OK.
 Finally, tart the Pi Audio Player application. The application should connect to the Network Table. Now, in Outline
 Viewer you can change the Network Table values to trigger events in the player.
 
+## Triggering sound from the robot
+The robot sets a network table value to trigger playing the audio file.
+``` java
+    private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    private final NetworkTable table = inst.getTable("Music");
+    private final NetworkTableEntry playEntry = table.getEntry("Play");
+
+    public void playGun() {
+        playEntry.setBoolean(true);
+    }
+```
+
 ## Note
 This was tested on a Raspberry Pi B running [Zulu 11 JDK](https://www.azul.com/downloads/zulu-community/?version=java-11-lts&os=linux&architecture=arm-32-bit-hf&package=jdk).
 It should work with OpenJDK on a modern Pi, but it has not been tested.
